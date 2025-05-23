@@ -1,4 +1,4 @@
-package SimulacionFilaAtencion;
+package ejercicio9;
 
 public class ColaL {
 	private NodoL frente, fin;

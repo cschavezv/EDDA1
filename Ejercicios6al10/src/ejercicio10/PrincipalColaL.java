@@ -1,4 +1,4 @@
-package ContadorTurnos;
+package ejercicio10;
 
 import java.util.Scanner;
 

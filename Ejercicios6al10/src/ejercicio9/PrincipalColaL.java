@@ -1,4 +1,4 @@
-package SimulacionFilaAtencion;
+package ejercicio9;
 
 import java.util.Scanner;
 

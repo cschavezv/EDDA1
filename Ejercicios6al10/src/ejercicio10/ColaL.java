@@ -1,4 +1,4 @@
-package ContadorTurnos;
+package ejercicio10;
 
 public class ColaL {
 	private NodoL frente, fin;
