@@ -7,5 +7,4 @@ public class TorresHanoiPrincipal {
 		TorresHanoi torre = new TorresHanoi();
 		torre.resolverHanoi(3, 'A', 'B', 'C');
 	}
-
 }
