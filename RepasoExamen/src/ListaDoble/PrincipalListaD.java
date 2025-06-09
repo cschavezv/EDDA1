@@ -16,8 +16,8 @@ public class PrincipalListaD {
 			System.out.println("2. Insertar un nodo por el final");
 			System.out.println("3. Mostrar lista de inicio a fin");
 			System.out.println("4. Mostrar lista de fin a inicio");
-			/*System.out.println("5. Tamaño de la pila");
-			System.out.println("6. Mostrar pila");
+			System.out.println("5. Buscar nodo");
+			/*System.out.println("6. Mostrar pila");
 			System.out.println("7. Salir");*/
 			System.out.println("Ingrese la opción:");
 			opcion = sc.nextInt();
@@ -41,7 +41,9 @@ public class PrincipalListaD {
 				miListaDoble.mostrarListaFinInicio();
 				break;
 			case 5:
-
+				System.out.println("Dato a buscar:");
+				dato = sc.nextInt();
+				System.out.println("El dato " + dato + " se encuentra en la posición " + miListaDoble.buscarNodo(dato));
 				break;
 			case 6:
 

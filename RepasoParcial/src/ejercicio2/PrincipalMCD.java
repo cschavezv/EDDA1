@@ -17,5 +17,4 @@ public class PrincipalMCD {
 		
 		System.out.println("El MCD de los valores " + a + " y " + b + " es: " + mcd.calcularMCD(a, b));
 	}
-
 }

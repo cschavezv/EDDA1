@@ -60,11 +60,20 @@ public class ListaD {
 		}
 	}
 	
-	public void buscarNodo() {
+	public int buscarNodo(int dato) {
+		int posicion = -1;
 		if(estaVacia()) {
 			System.out.println("Lista vacia. No se ha podido buscar un nodo");
+			return posicion;
 		}else {
-			
+			NodoDoble aux = inicio;
+			while(aux != null) {
+				if(aux.dato != dato) {
+					posicion++;
+					aux = aux.siguiente;
+				}
+			}
+			return posicion;
 		}
 	}
 	
