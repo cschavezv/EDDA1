@@ -14,5 +14,4 @@ public class PrincipalConteoRecursivo {
 		n = sc.nextInt();
 		cont.cuentaRegresiva(n);
 	}
-
 }

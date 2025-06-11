@@ -43,19 +43,29 @@ public class TablaNotas {
         return suma / numeroAlumnos;
     }
 
-    public int AlumnoNotaAlta(int materia) {
+    public int[] AlumnosNotaAlta(int materia) {
         if (materia < 0 || materia >= 4) {
-            return -1;
+            return null;
         }
-        int notaMax = notas[0][materia];
-        int alumno = 0;
+        int[] alumnos = new int[numeroAlumnos];
+        int cantidad = 0; //dimension del arreglo a crear (número de alumnos con misma nota)
+        int notaMax = notas[0][materia]; 
+        alumnos[cantidad++] = 0;
         for (int i = 1; i < numeroAlumnos; i++) {
-            if (notas[i][materia] > notaMax) {
-                notaMax = notas[i][materia];
-                alumno = i;
+            int notaActual = notas[i][materia];
+            if (notaActual > notaMax) {
+                notaMax = notaActual;
+                cantidad = 0;
+                alumnos[cantidad++] = i;
+            } else if (notaActual == notaMax) {
+                alumnos[cantidad++] = i;
             }
         }
-        return alumno;
+        int[] resultado = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            resultado[i] = alumnos[i];
+        }
+        return resultado;
     }
 
     public int Nota(int alumno, int materia) {

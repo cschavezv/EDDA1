@@ -1,95 +1,75 @@
 package Ejercicio4;
 
-class Nodo {
-    String pedido;
-    Nodo siguiente;
-
-    public Nodo(String pedido) {
-        this.pedido = pedido;
-        this.siguiente = null;
-    }
-}
-
 public class Pedidos {
-    private Nodo inicio;
-    private Nodo fin;
-    private int tamañoMaximo = 5;
-    private int tamañoActual = 0;
+	public String[] colaPedidos;
+	public int inicio, fin;
+	public final int dimension = 5; //agregamos una constante para usarla en todos los métodos
 
-    public Pedidos() {
-        inicio = null;
-        fin = null;
-    }
-
-    public boolean Llena() {
-        return tamañoActual >= tamañoMaximo;
-    }
-
-    public boolean Vacio() {
-        return inicio == null;
-    }
-
-    public void InsertarFinal(String pedido) {
-        if (Llena()) {
-            System.out.println("\nCola llena, no se puede añadir su pedido: " + pedido);
-            return;
-        }
-
-        Nodo nuevo = new Nodo(pedido);
-        if (Vacio()) {
-            inicio = nuevo;
-            fin = nuevo;
-        } else {
-            fin.siguiente = nuevo;
-            fin = nuevo;
-        }
-        tamañoActual++;
-        System.out.println("\nPedido agregado: " + pedido);
-    }
-
-    public void EliminarInicio() {
-        if (Vacio()) {
-            System.out.println("\nCola vacía, no hay pedidos por atender.");
-        } else {
-            System.out.println("\nPedido atendido: " + inicio.pedido);
-            inicio = inicio.siguiente;
-            tamañoActual--;
-            if (inicio == null) {
-                fin = null;
-            }
-        }
-    }
-
-    public void EliminarFinal() {
-        if (Vacio()) {
-            System.out.println("No hay pedidos para cancelar");
-        } else if (inicio == fin) {
-            System.out.println("\nPedido cancelado: " + fin.pedido);
-            inicio = null;
-            fin = null;
-            tamañoActual = 0;
-        } else {
-            Nodo actual = inicio;
-            while (actual.siguiente != fin) {
-                actual = actual.siguiente;
-            }
-            System.out.println("\nPedido cancelado: " + fin.pedido);
-            actual.siguiente = null;
-            fin = actual;
-            tamañoActual--;
-        }
-    }
-
-    public void MostrarCola() {
-        if (Vacio()) {
-            System.out.println("No hay pedidos que mostrar");
-        } else {
-            System.out.println("\nPedidos en espera:");
-            Nodo actual = inicio;
-            while (actual != null) {
-                System.out.println("- " + actual.pedido);
-                actual = actual.siguiente;
-            }
-        }
-    }
+	public Pedidos() {
+		this.colaPedidos = new String[this.dimension]; //Se inicializa el arreglo con la constante dimension
+		this.inicio = -1;
+		this.fin = -1;
+	}
+	
+	public boolean estaLlena() {
+		return fin == dimension - 1;
+	}
+	
+	public boolean estaVacia() {
+		return inicio == -1;
+	}
+	
+	public void insertarFinal(String bebida) {
+		if(estaLlena()) {
+			System.out.println("La cola está llena. No se puede preparar el " + bebida);
+			return;
+		}else if(estaVacia()){
+			fin = inicio = 0;
+		}else {
+			fin = (fin + 1) % dimension;
+		}
+		colaPedidos[fin] = bebida;
+		System.out.println("Se ha pedido un " + bebida);
+	}
+	
+	public void eliminarFrente() {
+		String beb = colaPedidos[inicio];
+		if(estaVacia()) {
+			System.out.println("La cola está vacía, no hay clientes.");
+			return;
+		}else if(inicio == fin){
+			inicio = fin = -1;
+		}else {
+			inicio = (inicio + 1) % dimension;
+		}
+		System.out.println("Se ha entregado el " + beb + " (pedido más antiguo)");
+	}
+	
+	public void eliminarFinal() {
+		String beb = colaPedidos[fin];
+		if(estaVacia()) {
+			System.out.println("La cola está vacía, no hay clientes.");
+			return;
+		}else if(inicio == fin) {
+			inicio = fin = -1;
+		}else {
+			fin = (fin - 1 + dimension) % dimension;
+		}
+		System.out.println("Se ha entregado el " + beb + " (se canceló el último pedido agregado)");
+	}
+	
+	public void mostrarElementos() {
+		if(estaVacia()) {
+			System.out.println("La cola está vacía, no hay clientes");
+			return;
+		}else {
+			int i = inicio;
+			while(true) {
+				System.out.print("[" + colaPedidos[i] + "] ");
+				if(i == fin) break;
+				i = (i + 1) % dimension;
+			}
+			System.out.println();
+		}
+	}
 }

@@ -12,6 +12,7 @@ public class PrincipalTablaNotas {
 
         TablaNotas tabla = new TablaNotas(numAlumnos);
         tabla.GenerarNotas();
+        tabla.ImprimirTabla();
 
         int opcion;
 
@@ -37,17 +38,19 @@ public class PrincipalTablaNotas {
                     break;
 
                 case 2:
-                    System.out.print("Ingrese el número de la materia (1-4): ");
-                    int max = sc.nextInt() - 1;
-                    int alumno = tabla.AlumnoNotaAlta(max);
-                    if (alumno != -1) {
-                        int nota = tabla.Nota(alumno, max);
-                        System.out.println("Alumno: " + (alumno + 1) + " tiene la nota más alta: " + nota + " en la materia: " + (max + 1));
-                    } else {
-                        System.out.println("Materia inválida");
-                    }
+                	System.out.print("Ingrese el número de la materia (1-4): ");
+                	int max = sc.nextInt() - 1;
+                	int[] alumnos = tabla.AlumnosNotaAlta(max);
+                	if (alumnos == null) {
+                	    System.out.println("Materia inválida");
+                	} else {
+                	    int nota = tabla.Nota(alumnos[0], max);
+                	    System.out.println("Los alumnos con la nota más alta (" + nota + ") en la materia " + (max + 1) + " son:");
+                	    for (int i = 0; i < alumnos.length; i++) {
+                	        System.out.println(" - Alumno " + (alumnos[i] + 1));
+                	    }
+                	}
                     break;
-
                 case 3:
                     System.out.println("Saliendo del programa...");
                     break;

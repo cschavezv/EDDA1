@@ -3,10 +3,10 @@ package Ejercicio3;
 public class Maquinaria {
 	public String[] colaMaquinaria;
 	public int inicio, fin;
-	public final int dimension = 5;
+	public final int dimension = 4;
 
-	public Maquinaria(int dimension) {
-		this.colaMaquinaria = new String[dimension];
+	public Maquinaria() {
+		this.colaMaquinaria = new String[this.dimension];
 		this.inicio = -1;
 		this.fin = -1;
 	}
@@ -21,7 +21,7 @@ public class Maquinaria {
 	
 	public void insertarFinal(String maquina) {
 		if(estaLlena()) {
-			System.out.println("La cola está llena. Espere a que se desocupe.");
+			System.out.println("La cola está llena. " + maquina + " no ha podido entrar");
 			return;
 		}else if(estaVacia()){
 			fin = inicio = 0;
@@ -42,7 +42,7 @@ public class Maquinaria {
 		}else {
 			inicio = (inicio + 1) % dimension;
 		}
-		System.out.println(maq + " ha salido de la cola por el inicio.");
+		System.out.println(maq + " ha salido de la cola por el inicio (ya cumplió su turno)");
 	}
 	
 	public void eliminarFinal() {
@@ -55,7 +55,7 @@ public class Maquinaria {
 		}else {
 			fin = (fin - 1 + dimension) % dimension;
 		}
-		System.out.println(maq + " ha salido de la cola por el final.");
+		System.out.println(maq + " ha salido de la cola por el final (fue llamada para otra obra)");
 	}
 	
 	public void mostrarElementos() {
@@ -65,7 +65,7 @@ public class Maquinaria {
 		}else {
 			int i = inicio;
 			while(true) {
-				System.out.print(colaMaquinaria[i] + " ");
+				System.out.print("[" + colaMaquinaria[i] + "] ");
 				if(i == fin) break;
 				i = (i + 1) % dimension;
 			}
