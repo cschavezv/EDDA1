@@ -11,7 +11,7 @@ public class PrincipalArbol {
 		arbol1.Insertar(15);
 		arbol1.Insertar(20);
 		arbol1.Insertar(2);
-		arbol1.preOrder(arbol1.getRaiz());
+		arbol1.ejecutarPreOrder();
 	}
 
 }
