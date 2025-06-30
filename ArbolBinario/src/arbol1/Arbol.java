@@ -44,7 +44,7 @@ public class Arbol {
 	}
 	
 	//Recorrido PreOrder
-	public void preOrder(NodoArbol nodo) {
+	private void preOrder(NodoArbol nodo) {
 		if(nodo == null) {
 			return;
 		}else {
@@ -55,7 +55,7 @@ public class Arbol {
 	}
 	
 	//Recorrido InOrder
-	public void inOrder(NodoArbol nodo) {
+	private void inOrder(NodoArbol nodo) {
 		if(nodo == null) {
 			return;
 		}else {
@@ -66,7 +66,7 @@ public class Arbol {
 	}
 	
 	//Recorrido PostOrder
-	public void postOrder(NodoArbol nodo) {
+	private void postOrder(NodoArbol nodo) {
 		if(nodo == null) {
 			return;
 		}else {
@@ -77,7 +77,7 @@ public class Arbol {
 	}
 	
 	//Buscar elemento dentro del árbol
-	public void buscarElemento(NodoArbol nodo, int valor, int nivel) {
+	private void buscarElemento(NodoArbol nodo, int valor, int nivel) {
 		if(estaVacio()) {
 			System.out.println("Árbol vacío, no se puede buscar.");
 			return;
@@ -101,8 +101,61 @@ public class Arbol {
 		}
 	}
 	
+	//Buscar con while
+	private boolean buscarNodo(NodoArbol nodo, int dato) {
+		NodoArbol aux = nodo;
+		while(dato != aux.getValor()) {
+			if(dato < aux.getValor()) {
+				aux = aux.getIzquierdo();
+			}else {
+				aux = aux.getDerecho();
+			}
+			if(aux == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//Ejecutar busqueda con while
+	public void ejecutarBusquedaWhile(int valor) {
+		System.out.println("\nBuscando el elemento...");
+		if(this.buscarNodo(this.raiz, valor)) {
+			System.out.println("Se ha encontrado el nodo en el árbol");
+		}else {
+			System.out.println("No se ha encontrado el nodo en el árbol");
+		}
+	}
+	
+	//Ejecutar búsqueda con recursividad
 	public void ejecutarBusqueda(int valor) {
 		System.out.println("\nBuscando el elemento...");
 		this.buscarElemento(this.raiz, valor, 0);
+	}
+	
+	//Eliminar nodo hoja
+	private void eliminarNodoHoja(NodoArbol padre, NodoArbol aux, boolean esHijoIzquierdo) {
+		if(aux == raiz) {
+			raiz = null;
+		}else {
+			if(esHijoIzquierdo) {
+				padre.setIzquierdo(null);
+			}else {
+				padre.setDerecho(null);
+			}
+		}
+	}
+	
+	private void nodoConUnHijo(NodoArbol padre, NodoArbol aux, boolean esHijoIzquierdo) {
+		if(aux.getDerecho() == null) {
+			if(aux == raiz) {
+				raiz = aux.getIzquierdo();
+			}else if(esHijoIzquierdo) {
+				padre.setIzquierdo(aux.getIzquierdo());
+			}else {
+				padre.setDerecho(aux.getIzquierdo());
+			}
+		}else if(aux.getIzquierdo() == null){
+		}
 	}
 }

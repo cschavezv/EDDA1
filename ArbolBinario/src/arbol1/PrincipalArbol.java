@@ -33,7 +33,7 @@ public class PrincipalArbol {
 					System.out.println("--Buscar un nodo--");
 					System.out.println("Ingrese el valor a buscar: ");
 					valor = sc.nextInt();
-					arbol1.ejecutarBusqueda(valor);
+					arbol1.ejecutarBusquedaWhile(valor);
 					break;
 				case 3:
 					arbol1.ejecutarPreOrder();
