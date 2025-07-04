@@ -1,4 +1,6 @@
-package Ejercicio1;
+package Ejercicio2;
+
+import Ejercicio2.NodoArbol;
 
 public class Arbol {
 	private NodoArbol inicial;
@@ -76,28 +78,6 @@ public class Arbol {
         }
         return nodo; //Retorna un nodo para la siguiente llamada recursiva o para la llamada final
     }
-    
-    
-    private void eliminarMultiploInOrden(NodoArbol nodo) {
-    	if(nodo == null || eliminado) return; //Si el nodo es null o si se ha eliminado el nodo, retorna
-    	
-    	//Recorremos el subárbol izquierdo
-    	eliminarMultiploInOrden(nodo.izquierdo); //Llega hasta el nodo más izquierdo (In Orden) y empieza la ejecución del bloque if siguiente:
-    	
-    	if(!eliminado && nodo.valor % 3 == 0) { //Si eliminado es false y el valor del nodo es múltiplo de 3
-    		inicial = EliminarRec(inicial, nodo.valor); //Mandamos a eliminar ese nodo
-    		eliminado = true; //Eliminado se torna true (llamadas recursivas retornan hasta acabar)
-    		return; //Retorna a la posible llamada recursiva anterior
-    	}
-    	
-    	//Si no encontró nada en el subárbol izquierdo, le mandamos a que recorra el subárbol derecho y busque el número por ahí
-    	eliminarMultiploInOrden(nodo.derecho);
-    }
-    
-    
-   public void eliminarMultiploDeTres() {
-	   eliminarMultiploInOrden(inicial);
-   }
 
     /**
      * Retorna el valor mínimo del árbol.
@@ -164,47 +144,87 @@ public class Arbol {
      * Recorrido InOrder.
      */
     public void InOrden() {
-        InOrdenRec(inicial);
+        System.out.println("\nRecorrido In-Orden: ");
+    	InOrdenRec(inicial);
         System.out.println();
     }
 
-    private void InOrdenRec(NodoArbol nodo) {
-        if (nodo != null) {
-            InOrdenRec(nodo.izquierdo);
-            System.out.print(nodo.valor + " ");
-            InOrdenRec(nodo.derecho);
+    private void InOrdenRec(NodoArbol nodo) { //I-R-D
+        if (nodo != null) { //Si el nodo no es hoja
+            InOrdenRec(nodo.izquierdo); //Recorremos hasta el nodo más izquierdo del árbol
+            System.out.print(nodo.valor + " "); //Cuando la llamada recursiva llegue aquí se imprime el nodo
+            InOrdenRec(nodo.derecho); //Una vez impreso el nodo raíz se recorre el nodo derecho
         }
+      //El método se va llamando a sí mismo hasta llegar a un punto en donde el nodo actual es null, ahí empieza a retornar a sus llamadas recursivas anteriores
     }
     
     /**
      * Recorrido PreOrder.
      */
     public void PreOrden() {
+    	System.out.println("\nRecorrido Pre-Orden: ");
         PreOrdenRec(inicial);
         System.out.println();
     }
 
-    private void PreOrdenRec(NodoArbol nodo) {
-        if (nodo != null) {
-            System.out.print(nodo.valor + " ");
-            PreOrdenRec(nodo.izquierdo);
-            PreOrdenRec(nodo.derecho);
+    private void PreOrdenRec(NodoArbol nodo) { //R-I-D
+        if (nodo != null) { 
+            System.out.print(nodo.valor + " "); //Se imprime el nodo actual (empieza por la raíz)
+            PreOrdenRec(nodo.izquierdo); //Llamada recursiva para recorrer el nodo izquierdo
+            PreOrdenRec(nodo.derecho); //Llamada recursiva para recorre el nodo derecho
         }
+        //El método se va llamando a sí mismo hasta llegar a un punto en donde el nodo actual es null, ahí empieza a retornar a sus llamadas recursivas anteriores
     }
 
     /**
      * Recorrido PostOrder.
      */
     public void PostOrden() {
-        PostOrdenRec(inicial);
+    	System.out.println("\nRecorrido Post-Orden: ");
+    	PostOrdenRec(inicial);
         System.out.println();
     }
 
-    private void PostOrdenRec(NodoArbol nodo) {
+    private void PostOrdenRec(NodoArbol nodo) { //I-D-R
         if (nodo != null) {
-            PostOrdenRec(nodo.izquierdo);
-            PostOrdenRec(nodo.derecho);
-            System.out.print(nodo.valor + " ");
+            PostOrdenRec(nodo.izquierdo); //Recorremos hasta el nodo más izquierdo del árbol
+            PostOrdenRec(nodo.derecho); //Se recorre el nodo derecho una vez ya recorrido el izquierdo
+            System.out.print(nodo.valor + " "); //Se imprime el nodo actual
         }
+      //El método se va llamando a sí mismo hasta llegar a un punto en donde el nodo actual es null, ahí empieza a retornar a sus llamadas recursivas anteriores
+    }
+    
+    private int calcularLCI(NodoArbol nodo, int profundidad) { //Suma de las longitudes de los nodos internos (No nodos hoja)
+    	if(nodo == null) return 0; //Si llegamos a null se retorna 0
+    	
+    	if(nodo.izquierdo == null && nodo.derecho == null) { //Si ambos brazos del nodo apuntan a null (es decir, es nodo hoja)
+    		return 0; //Los nodos hoja no suman nada
+    	}
+    	return profundidad + calcularLCI(nodo.izquierdo, profundidad + 1) + calcularLCI(nodo.derecho, profundidad + 1);
+    	//Sumamos la profundidad de la raíz (1) + llamada recursiva para que recorra el subárbol izquierdo (profunidad aumenta en cada nivel) +
+    	//llamada recursiva para que recorra el subárbol derecho (profunidad aumenta en cada nivel)
+    }
+    
+    private int calcularLCE(NodoArbol nodo, int profundidad) { //Suma de las longitudes de los nodos externos (Nodos hoja)
+    	if(nodo == null) return 0; //Si llegamos a null se retorna 0
+    	
+    	if(nodo.izquierdo == null && nodo.derecho == null) { //Si ambos brazos del nodo apuntan a null (es decir, es nodo hoja)
+    		return profundidad; //Los nodos hoja suman la profundidad y la retornan para la llamada recursiva
+    	}
+    	return calcularLCE(nodo.izquierdo, profundidad + 1) + calcularLCE(nodo.derecho, profundidad + 1);
+    	//(Ya no se toma en cuenta la profundidad de la raíz = 0) + llamada recursiva para que recorra el subárbol izquierdo (profunidad aumenta en cada nivel) +
+    	//llamada recursiva para que recorra el subárbol derecho (profunidad aumenta en cada nivel)
+    }
+    
+    public void LCI() {
+    	System.out.println("El LCI del árbol es: " + 
+    	calcularLCI(inicial, 1) //Empezamos desde la raíz con profundidad 1
+    	);
+    }
+    
+    public void LCE() {
+    	System.out.println("El LCE del árbol es: " + 
+    	    	calcularLCE(inicial, 1) //Empezamos desde la raíz con profundidad 1
+    	    	);
     }
 }

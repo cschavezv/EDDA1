@@ -9,8 +9,6 @@ public class Principal {
 		Random rd = new Random();
 		Arbol arbol = new Arbol();
 		int matriz[][] = new int[3][3];
-		boolean encontrado = false;
-		int valor;
 		
 		//Llenamos la matriz
 		for(int i = 0; i < matriz.length; i++) {
@@ -21,24 +19,13 @@ public class Principal {
 			}
 		}
 		
-		System.out.println("Árbol sin eliminar múltiplo de 3");
+		System.out.println("\nÁrbol sin eliminar múltiplo de 3");
 		arbol.InOrden();
 		
-		/*for(int i = 0; i < matriz.length; i++) {
-			for(int j = 0; j < matriz[0].length; j++) {
-				if(matriz[i][j] % 3 == 0) {
-					arbol.Eliminar(matriz[i][j]);
-					encontrado = true;
-					break;
-				}
-			}
-			if(encontrado) break;
-		}*/
 		
-		arbol.Eliminar(arbol.BuscarMult());
-		
-		System.out.println("Árbol con eliminación de múltiplo de 3");
+		System.out.println("\nÁrbol con eliminación de múltiplo de 3");
+		//Recorrer el árbol en In-Orden
+		arbol.eliminarMultiploDeTres();
 		arbol.InOrden();
 	}
-
 }
