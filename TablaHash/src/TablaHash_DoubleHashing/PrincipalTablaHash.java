@@ -8,13 +8,25 @@ public class PrincipalTablaHash {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		int opcion = 0;
-		Datos_TablaHash datos = new Datos_TablaHash(10);
-		TablaHash tabla = new TablaHash(datos);
+		TablaHash tabla;
 		int clave = 0;
-		boolean claveCorrecta = true;
+		int tamanio;
+		boolean primo;
+		
+		do {
+			primo = true;
+			System.out.println("Ingresa el tamaño de la Tabla Hash (debe ser un número primo):");
+			tamanio = sc.nextInt();
+			if(!TablaHash.esPrimo(tamanio)) {
+				primo = false;
+				System.out.println(tamanio + " no es número primo, ingresa nuevamente...");
+			}
+		}while(!primo);
+		System.out.println("\nIngresando al menú...");
+		tabla = new TablaHash(tamanio);
 		
 		do{
-			System.out.println("---MENÚ TABLA HASH---");
+			System.out.println("\n---MENÚ TABLA HASH---");
 			System.out.println("1. Insertar una clave");
 			System.out.println("2. Eliminar una clave");
 			System.out.println("3. Mostrar contenido de la tabla");
@@ -29,9 +41,8 @@ public class PrincipalTablaHash {
 					clave = sc.nextInt();
 					if(clave <= 0) {
 						System.out.println("Solo se permiten claves mayores a 0.");
-						claveCorrecta = false;
 					}
-				}while(!claveCorrecta);
+				}while(clave <= 0);
 				tabla.insertarClave(clave);
 				break;
 			case 2:
@@ -40,9 +51,8 @@ public class PrincipalTablaHash {
 					clave = sc.nextInt();
 					if(clave <= 0) {
 						System.out.println("Solo se permiten claves mayores a 0.");
-						claveCorrecta = false;
 					}
-				}while(!claveCorrecta);
+				}while(clave <= 0);
 				tabla.eliminarClave(clave);
 				break;
 			case 3:
@@ -55,6 +65,6 @@ public class PrincipalTablaHash {
 				System.err.println("Opción no válida. Ingresa nuevamente...");
 				break;
 			}
-		}while(opcion < 4);
+		}while(opcion != 4);
 	}
 }
