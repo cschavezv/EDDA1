@@ -104,7 +104,7 @@ public class ArbolAVL {
 		}
 		//ID -> Primero rotar izquierda y después derecha
 		if(fe > 1 && factorEquilibrio(nodo.izquierdo) < 0) {
-			nodo.izquierdo = rotacionSimpleDerecha(nodo.izquierdo);
+			nodo.izquierdo = rotacionSimpleIzquierda(nodo.izquierdo);
 			return rotacionSimpleDerecha(nodo);
 		}
 		//DI -> Primero rotar derecha y después izquierda
